@@ -1,0 +1,98 @@
+﻿@model WebApplication4.Models.BankAccount
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<div class="full-content-center animated fadeInDownBig">
+        <div class="box-info">
+            <h2 class="text-center"><strong>@Model.Name</strong> Details</h2>
+                <div class=" row" style="background-color:lightcoral">
+                    <div class="col-sm-6 col-sm-offset-3 company-column" style="margin-top:20px">
+
+
+
+
+
+                        <p>
+                            With: <br />
+                            @Html.DisplayFor(model => model.AccountWith.Name)
+                        </p>
+
+
+                        <p>
+                            @Html.DisplayNameFor(model => model.Amount): <br />
+                            @Html.DisplayFor(model => model.Amount)
+                        </p>
+
+
+                    </div>
+</div>
+            <div class="row">
+                    <h4>Transactions</h4>
+                    <hr />
+                    <div class="col-sm-6 ">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+
+                                        <th>
+                                            Type
+                                        </th>
+                                        <th>
+                                            Description
+                                        </th>
+                                        <th>
+                                            Budget Category
+                                        </th>
+                                        <th>
+                                            Date
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Amount)
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Transactions)
+            {
+                                        <tr>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Type.Name)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Description)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.BudgetCate.Name)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Date.Month) / @Html.DisplayFor(modelItem => item.Date.Year)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Amount)
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <p class="text-center"><a href="@Url.Action("Edit","BankAccounts", new { id = Model.Id})"><i class="fa fa-edit"></i>Edit</a></p>
+    <p class="text-center"><a href="@Url.Action("Index","Admin")"><i class="fa fa-home"></i>Back to home</a></p>
+    
+        </div>
+
+
+
+
+
+
+           

@@ -1,0 +1,82 @@
+﻿@model WebApplication4.Models.Transaction
+
+<div class="box-info">
+    <h2><strong>Add</strong> Transaction</h2>
+
+    <!-- Additional buttons -->
+    <div class="additional-btn">
+
+        <a class="additional-icon" href="#" data-toggle="collapse" data-target="#addtrans-report"><i class="fa fa-chevron-down"></i></a>
+    </div>
+
+    <div id="addtrans-report" class="collapse in">
+        <div id = "form-horizontal">
+
+            @using (Html.BeginForm("Create", "Transactions", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.AntiForgeryToken()
+
+
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TypeId, "", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("TypeId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TypeId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BankAccountId, "", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("BankAccountId", null, "Choose Account", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.BankAccountId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.BudgetCateId, "", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("BudgetCateId", null, "Choose a Category", htmlAttributes: new { @class = "form-control", @id = "Catergory" })
+                            @Html.ValidationMessageFor(model => model.BankAccountId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Description, "", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @placeholder = "Description/Same as budget name " } })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Amount, "",htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control", @placeholder = 0.00 } })
+                            @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Add" class="btn btn-default" />
+                        </div>
+                    </div>
+
+            }
+        </div>
+
+           </div>
+    </div>
+
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }

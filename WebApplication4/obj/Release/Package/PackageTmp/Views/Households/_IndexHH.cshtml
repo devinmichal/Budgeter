@@ -1,0 +1,63 @@
+﻿@model WebApplication4.Models.Household
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+@if (Model == null)
+{
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<div>
+    @using (Html.BeginForm("Join", "Households", FormMethod.Post))
+    {
+
+        <div class="form-group">
+            @Html.Label("Join Household", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("code", null, new { @placeholder = "Enter varification code" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+
+            </div>
+        </div>
+
+    }
+</div>
+}
+else
+{
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+
+
+    <tr>
+        <td>
+            @Html.DisplayFor(model => model.Name)
+        </td>
+       
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = Model.Id }) 
+      
+        </td>
+        
+    </tr>
+
+
+</table>
+
+  
+}

@@ -1,0 +1,38 @@
+﻿@model WebApplication4.Models.Household
+
+@{
+    ViewBag.Title = "_HHUserCount";
+}
+
+ <!-- Visitor Info Box -->
+<div class="col-sm-4 col-xs-6">
+    <!-- Box info -->
+    <a href="@Url.Action("Edit","Households", new { id = Model.Id})">
+        <div class="box-info">
+            <!-- Icon box -->
+            <div class="icon-box">
+                <span class="fa-stack">
+                    <i class="fa fa-circle fa-stack-2x success"></i>
+                    <i class="fa fa-users fa-stack-1x fa-inverse"></i>
+                </span>
+            </div><!-- End div .icon-box -->
+            <!-- Text box -->
+            <div class="text-box">
+                @if (Model != null)
+                {
+                    <h3>@Model.Users.Count()</h3>
+                }
+                else
+
+                {
+                    <h3>0</h3>
+                }
+                <p>Members</p>
+            </div><!-- End div .text-box -->
+            <div class="clear"></div>
+          
+            <p class="text-center">Click to edit household</p>
+        </div><!-- End div .info-box -->
+        </a>
+</div>
+<!-- End Visitor Info Box -->

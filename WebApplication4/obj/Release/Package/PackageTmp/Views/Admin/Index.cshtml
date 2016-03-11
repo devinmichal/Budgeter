@@ -1,0 +1,214 @@
+﻿
+@{
+    ViewBag.Title = "Admin";
+}
+
+
+	<!-- Your logo goes here -->
+<div class="logo-brand header sidebar rows">
+    <div class="logo">
+        <h1><a href="">MyBudget</a></h1>
+    </div>
+</div><!-- End div .header .sidebar .rows -->
+<!-- BEGIN SIDEBAR -->
+<div class="left side-menu">
+
+
+    <div class="body rows scroll-y">
+
+        <!-- Scrolling sidebar -->
+        <div class="sidebar-inner slimscroller">
+
+            <!-- User Session -->
+            <!-- End div .media -->
+            <!-- Search form -->
+           <!-- End div #search -->
+            <!-- Sidebar menu -->
+            <div id="sidebar-menu">
+                <ul>
+                    <li><a href=""><i class="fa fa-home"></i>Dashboard</a></li>
+                    <li><a href="/Admin/#"><i class="fa fa-question"></i>Help</a></li>
+                </ul>
+                <div class="clear"></div>
+            </div><!-- End div #sidebar-menu -->
+        </div><!-- End div .sidebar-inner .slimscroller -->
+    </div><!-- End div .body .rows .scroll-y -->
+    <!-- Sidebar footer -->
+    <div class="footer rows animated fadeInUpBig">
+       <!-- End div .progress .progress-xs -->
+    </div><!-- End div .footer .rows -->
+</div>
+<!-- END SIDEBAR -->
+
+	<!-- BEGIN CONTENT -->
+<div class="right content-page">
+
+    <!-- BEGIN CONTENT HEADER -->
+    <div class="header content rows-content-header">
+
+        <!-- Button mobile view to collapse sidebar menu -->
+        <button class="button-menu-mobile show-sidebar">
+            <i class="fa fa-bars"></i>
+        </button>
+
+        <!-- BEGIN NAVBAR CONTENT-->
+        <div class="navbar navbar-default" role="navigation">
+            <div class="container">
+                <!-- Navbar header -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <i class="fa fa-angle-double-down"></i>
+                    </button>
+                </div><!-- End div .navbar-header -->
+                <!-- Navbar collapse -->
+                <div class="navbar-collapse collapse">
+
+
+                    <!-- Right navbar -->
+                    <ul class="nav navbar-nav navbar-right top-navbar">
+
+                      
+                
+                        <!-- Dropdown User session -->
+
+                        <!-- End Dropdown User session -->
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div><!-- End div .navbar-collapse -->
+            </div><!-- End div .container -->
+        </div>
+        <!-- END NAVBAR CONTENT-->
+    </div>
+    <!-- END CONTENT HEADER -->
+
+   
+  
+
+    <!-- ============================================================== -->
+    <!-- START YOUR CONTENT HERE -->
+    <!-- ============================================================== -->
+    <div class="body content rows scroll-y">
+        @if (ViewBag.HasHH != true)
+        {
+            <div class=" row">
+                <div class="col-sm-6">
+                    @Html.Action("Create", "Households")
+                </div>
+                <div class="col-sm-6">
+                    @Html.Action("Join", "Households")
+                </div>
+            </div>
+        }
+
+        else
+        {
+
+        <!-- Page header -->
+        <div class="page-heading">
+            <h1>Account<small> Dashboard</small></h1>
+        </div>
+        <!-- End page header -->
+        <!-- Begin info box -->
+        <div class="row">
+            <!--Household user info-->
+           @Html.Action("UserCount", "Households")
+            <!--Household user info-->
+            <!-- Orders Info Box -->
+            @Html.Action("Account", "Households")
+            <!-- End Orders Info Box -->
+            <!-- Downloads Info Box -->
+            @Html.Action("Budget", "Households")
+            <!-- End Downloads Info Box -->
+        
+
+        </div>
+        <!-- End of info box -->
+
+        <div class="page-heading">
+            <h1>Account<small> Info</small></h1>
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                @Html.Action("Index", "BankAccounts")
+                <div class="row">
+                    <div class="col-sm-12">
+                        @Html.Action("Index", "Budgets")
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        @Html.Action("Index", "Transactions")
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                    @Html.Action("Create", "Transactions")     
+            </div><!-- End div .col-sm-4 -->
+        </div><!-- End div .row -->
+
+        <div class="page-heading">
+            <h1>Account<small> Graphs</small></h1>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div id="mysurpluschart" style="height: 250px;">
+
+                </div>
+            </div>
+        </div>
+        }
+        <footer>
+            &copy; @DateTimeOffset.Now.Year <a href="">MyBudget</a>
+        </footer>
+        <!-- End Footer -->
+
+    </div>
+    <!-- ============================================================== -->
+    <!-- END YOUR CONTENT HERE -->
+    <!-- ============================================================== -->
+     
+
+</div>
+<!-- END CONTENT -->
+
+@if(ViewBag.HasHH){
+@section scripts
+    {
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            
+            $('#transactiontable').DataTable();
+            $.post('@Url.Action("SurplusChart", "Graphs")').then(function (response) {
+                new Morris.Bar({
+                    // ID of the element in which to draw the chart.
+                    element: 'mysurpluschart',
+                    // Chart data records -- each entry in this array corresponds to a point on
+                    // the chart.
+                    data: response,
+                    // The name of the data record attribute that contains x-values.
+                    xkey: 'year',
+                    // A list of names of data record attributes that contain y-values.
+                    ykeys: ['total','current'],
+                    // Labels for the ykeys -- will be displayed when you hover over the
+                    // chart.
+                    labels: ['total', 'current']
+                });
+            });
+        });
+        
+    </script>
+
+}
+
+}
+
+
+
+

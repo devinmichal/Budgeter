@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - MyBudget</title>
+    @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+        <link href="~/Content/DataTables-1.10.10/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+        <link href="~/Content/landing-page.css" rel="stylesheet" />
+        <link href="~/Content/animate.css" rel="stylesheet" />
+        <link href="~/Content/style.css" rel="stylesheet" />
+        <link href="~/Content/style-responsive.css" rel="stylesheet" />
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+ 
+   
+</head>
+<body class="tooltips full-content ">
+    @if (ViewBag.Title == "Home Page")
+    {
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("MyBudget", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    
+                 
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                    <li>@Html.ActionLink("Account", "Index", "Admin")</li> 
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    }
+    <div class="">
+        @RenderBody()
+@if (ViewBag.Title == "Home Page")
+{
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - MyBudget</p>
+        </footer>
+}
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/DataTables-1.10.10/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/DataTables-1.10.10/media/js/dataTables.bootstrap.min.js"></script>
+
+    <script src="~/Scripts/bootstrap.file-input.js"></script>
+    <script src="~/Scripts/bootstrap-select.min.js"></script>
+    <script src="~/Scripts/icheck.min.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/summernote.min.js"></script>
+    <script src="~/Scripts/jquery.slimscroll.min.js"></script>
+   
+    <script src="~/Scripts/lanceng.js"></script>
+    
+ 
+    
+    @RenderSection("scripts", required: false)
+</body>
+</html>

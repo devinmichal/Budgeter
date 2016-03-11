@@ -1,0 +1,25 @@
+﻿
+<div class="box-info">
+    <h2>Join Account</h2>
+
+    <div class="form-inline">
+        @using (Html.BeginForm("Join", "Households", FormMethod.Post, new { @class = "form-inline" }))
+        {
+
+            <div class="form-group">
+                @Html.Label("", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBox("code", null, new { @placeholder = "Enter varification code" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Join" class="btn btn-default" />
+
+                </div>
+            </div>
+
+        }
+    </div>
+</div>

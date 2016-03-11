@@ -1,0 +1,182 @@
+﻿ @model IEnumerable<WebApplication4.Models.Budget>
+
+<div class="box-info full">
+    <h2><strong>Budgets</strong></h2>
+
+    <!-- Additional buttons -->
+    <div class="additional-btn">
+
+        <a class="additional-icon" href="#" data-toggle="collapse" data-target="#budget-report"><i class="fa fa-chevron-down"></i></a>
+    </div>
+
+    <div id="budget-report" class="collapse in">
+        <div class="table-responsive">
+            <table class="table table-striped" id="budgettable">
+                <thead>
+                    <tr>
+                        <th>
+                        Name
+                        </th>
+                        <th>
+                     Category
+                        </th>
+                     
+                        <th>
+                            @Html.DisplayNameFor(model => model.Amount)
+                        </th>
+                        <th>
+                        Monthly Total
+                        </th>
+                        <th>
+                Status
+                        </th>
+                        <th>
+                            Options
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="">
+                        <td>Income</td>
+                        <td>----------</td>
+                        <td>----------</td>
+                        <td>----------</td>
+                        <td>----------</td>
+                        <td>----------</td>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        if (item.BudgetCate.Name == "Income")
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BudgetCate.Name)
+                            </td>
+                      
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                            <td>
+                                ----------
+                            </td>
+                            <td>
+                                ----------
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-xs">
+                                    <a href="@Url.Action("Edit","Budgets",new { id = item.Id })" data-toggle="tooltip" title="edit" class="btn btn-default"><i class="fa fa-edit"></i></a>
+                                    <a href="@Url.Action("Details","Budgets",new { id = item.Id })" data-toggle="tooltip" title="details" class="btn btn-default"><i class="fa fa-info"></i></a>
+                                    <a href="@Url.Action("Delete","Budgets",new { id = item.Id })" data-toggle="tooltip" title="delete" class="btn btn-default"><i class="fa fa-trash"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+
+                    }
+                        <tr class="">
+                            <td>Expenses</td>
+                            <td>----------</td>
+                            <td>----------</td>
+                            <td>----------</td>
+                            <td>----------</td>
+                            <td>----------</td>
+                        </tr>
+                    @foreach (var item in Model) {
+                        if (item.BudgetCate.Name != "Income")
+                        {
+                            {
+                                var stat = " ";
+                                if (item.BudgetStat.Name == "At Budget") { stat = "primary"; }
+                                else if (item.BudgetStat.Name == "Below Budget") { stat = "success"; }
+                                else if (item.BudgetStat.Name == "Close to Budget") { stat = "warning"; }
+                                else { stat = "danger"; }
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BudgetCate.Name)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Amount)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MonthlyTotal)
+                                </td>
+                                <td >
+                                    <span class=" label label-@stat">@Html.DisplayFor(modelItem => item.BudgetStat.Name)</span>  
+                                </td>
+                                
+                                <td>
+                                    <div class="btn-group btn-group-xs">
+                                        <a href="@Url.Action("Edit", "Budgets", new { id = item.Id })" data-toggle="tooltip" title="edit" class="btn btn-default"><i class="fa fa-edit"></i></a>
+                                        <a href="@Url.Action("Details", "Budgets", new { id = item.Id })" data-toggle="tooltip" title="details" class="btn btn-default"><i class="fa fa-info"></i></a>
+                                        <a href="@Url.Action("Delete", "Budgets", new { id = item.Id })" data-toggle="tooltip" title="delete" class="btn btn-default"><i class="fa fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+                        }
+                    }
+                </tbody>
+                <tfoot>
+                    @{
+                        decimal totalAmount = 0;
+                        decimal? totalMonth = 0;
+                        decimal? budgetIncome = 0;
+                        decimal? surplus = 0;
+                        foreach (var a in Model) {
+                            if (a.BudgetCate.Name == "Income")
+                            {
+                                budgetIncome = budgetIncome + a.Amount;
+                                a.Amount = 0; }
+                            totalAmount = totalAmount + a.Amount; }
+                        foreach (var a in Model) {
+                            if (a.BudgetCate.Name == "Income") { a.Amount = 0; }
+                            totalMonth = totalMonth + a.MonthlyTotal; }
+
+                        surplus = (budgetIncome - totalMonth);
+
+                        <tr>
+                            <td>Total</td>
+                            <td>----------</td>
+                            <td>@totalAmount</td>
+                            <td>@totalMonth</td>
+                            <td>----------</td>
+                            <td>----------</td>
+                        </tr>
+                        if (surplus > 0)
+                        {
+                        <tr class="success">
+                            <td>Surplus</td>
+                            <td>----------</td>
+                            <td>-----------</td>
+                            <td>@surplus</td>
+                            <td>----------</td>
+                            <td>----------</td>
+                        </tr>
+                        }
+                        else if(surplus < 0)
+                        {
+                            <tr class="danger">
+                                <td>Deficit</td>
+                                <td>----------</td>
+                                <td>-----------</td>
+                                <td>@surplus</td>
+                                <td>----------</td>
+                                <td>----------</td>
+                            </tr>
+                        }
+                    }
+                </tfoot>
+
+            </table>
+</div>
+ </div>
+    </div>
+
+

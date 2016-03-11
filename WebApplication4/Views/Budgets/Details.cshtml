@@ -1,0 +1,36 @@
+﻿@model WebApplication4.Models.Budget
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="full-content-center animated fadeInDownBig">
+    <div class="box-info">
+
+        <h2 class="text-center"><strong>@Model.Name</strong> Details</h2>
+
+        <dl class="dl-horizontal">
+            <dt>
+                Category
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BudgetCate.Name)
+            </dd>
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Amount)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Amount)
+            </dd>
+
+        </dl>
+    </div>
+    <p class="text-center"><a href="@Url.Action("Edit","Budgets", new { id = Model.Id})"><i class="fa fa-edit"></i>Edit</a></p>
+    <p class="text-center"><a href="@Url.Action("Index","Admin")"><i class="fa fa-home"></i>Back to home</a></p>
+
+    </div>
+ 
